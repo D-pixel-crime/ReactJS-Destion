@@ -3,27 +3,27 @@ import { TailSpin } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { useSnackbar } from "../context/SnackbarProvider";
 
-interface formProps {
+interface formProps<T> {
   allFields: {
     type: string;
     placeholder: string;
     id: string;
   }[];
-  setFormDetails: any;
-  formDetails: any;
+  setFormDetails: React.Dispatch<React.SetStateAction<T>>;
+  formDetails: T;
   heading: string;
   alternateButton?: string;
   alternateLink: string;
 }
 
-const Form = ({
+const Form = <T extends Record<string, string>>({
   allFields,
   setFormDetails,
   formDetails,
   heading,
   alternateButton,
   alternateLink,
-}: formProps) => {
+}: formProps<T>) => {
   const { showMessage } = useSnackbar();
   const [isSubmit, setIsSubmit] = useState(false);
 
