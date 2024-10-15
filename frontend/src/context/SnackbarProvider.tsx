@@ -1,13 +1,14 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import {
-  Snackbar,
-  Alert,
-  AlertTitle,
-  Slide,
-  Fade,
-  SlideProps,
-} from "@mui/material";
+import { Snackbar, Alert, AlertTitle, Slide, Fade } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
+
+function SlideTransition(props: TransitionProps) {
+  return (
+    <Slide {...props} direction="up">
+      {props.children as React.ReactElement}
+    </Slide>
+  );
+}
 
 type SnackbarContextType = {
   showMessage: (
@@ -49,7 +50,7 @@ export const SnackbarProvider: React.FC<{ children: ReactNode }> = ({
     >;
   }>({
     open: false,
-    Transition: Fade,
+    Transition: SlideTransition, // Set SlideTransition as the default transition
   });
 
   const handleClose = () => {
@@ -61,7 +62,7 @@ export const SnackbarProvider: React.FC<{ children: ReactNode }> = ({
     status: "success" | "error" | "warning" | "info",
     TransitionComponent: React.ComponentType<
       TransitionProps & { children: React.ReactElement<any, any> }
-    > = Fade
+    > = SlideTransition // Use SlideTransition as default
   ) => {
     setIsSuccess({ status, message });
     setState({ open: true, Transition: TransitionComponent });

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TailSpin } from "react-loader-spinner";
 import { Link } from "react-router-dom";
+import { useSnackbar } from "../context/SnackbarProvider";
 
 interface formProps {
   allFields: {
@@ -23,6 +24,7 @@ const Form = ({
   alternateButton,
   alternateLink,
 }: formProps) => {
+  const { showMessage } = useSnackbar();
   const [isSubmit, setIsSubmit] = useState(false);
 
   return (
@@ -34,9 +36,14 @@ const Form = ({
         onSubmit={(e) => {
           e.preventDefault();
           setIsSubmit(true);
+          showMessage(
+            "This is a 'DEMO' project. No backend integration is present.",
+            "success"
+          );
           setTimeout(() => {
             setIsSubmit(false);
-          }, 2000);
+            window.location.href = "/";
+          }, 3000);
         }}
         method="post"
         className="flex flex-col lg:w-4/12 p-8 rounded-xl gap-4 bg-slate-200/80 shadow-md shadow-slate-400 mb-5"
